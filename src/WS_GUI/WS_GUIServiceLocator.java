@@ -1,59 +1,59 @@
 /**
- * SetProblemServiceLocator.java
+ * WS_GUIServiceLocator.java
  *
  * This file was auto-generated from WSDL
  * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
  */
 
-package SetProblem;
+package WS_GUI;
 
-public class SetProblemServiceLocator extends org.apache.axis.client.Service implements SetProblem.SetProblemService {
+public class WS_GUIServiceLocator extends org.apache.axis.client.Service implements WS_GUI.WS_GUIService {
 
-    public SetProblemServiceLocator() {
+    public WS_GUIServiceLocator() {
     }
 
 
-    public SetProblemServiceLocator(org.apache.axis.EngineConfiguration config) {
+    public WS_GUIServiceLocator(org.apache.axis.EngineConfiguration config) {
         super(config);
     }
 
-    public SetProblemServiceLocator(java.lang.String wsdlLoc, javax.xml.namespace.QName sName) throws javax.xml.rpc.ServiceException {
+    public WS_GUIServiceLocator(java.lang.String wsdlLoc, javax.xml.namespace.QName sName) throws javax.xml.rpc.ServiceException {
         super(wsdlLoc, sName);
     }
 
-    // Use to get a proxy class for SetProblemPort
-    private java.lang.String SetProblemPort_address = "http://localhost:8080/wsig/ws/SetProblem";
+    // Use to get a proxy class for WS_GUIPort
+    private java.lang.String WS_GUIPort_address = "http://localhost:8080/wsig/ws/WS_GUI";
 
-    public java.lang.String getSetProblemPortAddress() {
-        return SetProblemPort_address;
+    public java.lang.String getWS_GUIPortAddress() {
+        return WS_GUIPort_address;
     }
 
     // The WSDD service name defaults to the port name.
-    private java.lang.String SetProblemPortWSDDServiceName = "SetProblemPort";
+    private java.lang.String WS_GUIPortWSDDServiceName = "WS_GUIPort";
 
-    public java.lang.String getSetProblemPortWSDDServiceName() {
-        return SetProblemPortWSDDServiceName;
+    public java.lang.String getWS_GUIPortWSDDServiceName() {
+        return WS_GUIPortWSDDServiceName;
     }
 
-    public void setSetProblemPortWSDDServiceName(java.lang.String name) {
-        SetProblemPortWSDDServiceName = name;
+    public void setWS_GUIPortWSDDServiceName(java.lang.String name) {
+        WS_GUIPortWSDDServiceName = name;
     }
 
-    public SetProblem.SetProblemPort getSetProblemPort() throws javax.xml.rpc.ServiceException {
+    public WS_GUI.WS_GUIPort getWS_GUIPort() throws javax.xml.rpc.ServiceException {
        java.net.URL endpoint;
         try {
-            endpoint = new java.net.URL(SetProblemPort_address);
+            endpoint = new java.net.URL(WS_GUIPort_address);
         }
         catch (java.net.MalformedURLException e) {
             throw new javax.xml.rpc.ServiceException(e);
         }
-        return getSetProblemPort(endpoint);
+        return getWS_GUIPort(endpoint);
     }
 
-    public SetProblem.SetProblemPort getSetProblemPort(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
+    public WS_GUI.WS_GUIPort getWS_GUIPort(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
         try {
-            SetProblem.SetProblemBindingStub _stub = new SetProblem.SetProblemBindingStub(portAddress, this);
-            _stub.setPortName(getSetProblemPortWSDDServiceName());
+            WS_GUI.WS_GUIBindingStub _stub = new WS_GUI.WS_GUIBindingStub(portAddress, this);
+            _stub.setPortName(getWS_GUIPortWSDDServiceName());
             return _stub;
         }
         catch (org.apache.axis.AxisFault e) {
@@ -61,8 +61,8 @@ public class SetProblemServiceLocator extends org.apache.axis.client.Service imp
         }
     }
 
-    public void setSetProblemPortEndpointAddress(java.lang.String address) {
-        SetProblemPort_address = address;
+    public void setWS_GUIPortEndpointAddress(java.lang.String address) {
+        WS_GUIPort_address = address;
     }
 
     /**
@@ -72,9 +72,9 @@ public class SetProblemServiceLocator extends org.apache.axis.client.Service imp
      */
     public java.rmi.Remote getPort(Class serviceEndpointInterface) throws javax.xml.rpc.ServiceException {
         try {
-            if (SetProblem.SetProblemPort.class.isAssignableFrom(serviceEndpointInterface)) {
-                SetProblem.SetProblemBindingStub _stub = new SetProblem.SetProblemBindingStub(new java.net.URL(SetProblemPort_address), this);
-                _stub.setPortName(getSetProblemPortWSDDServiceName());
+            if (WS_GUI.WS_GUIPort.class.isAssignableFrom(serviceEndpointInterface)) {
+                WS_GUI.WS_GUIBindingStub _stub = new WS_GUI.WS_GUIBindingStub(new java.net.URL(WS_GUIPort_address), this);
+                _stub.setPortName(getWS_GUIPortWSDDServiceName());
                 return _stub;
             }
         }
@@ -94,8 +94,8 @@ public class SetProblemServiceLocator extends org.apache.axis.client.Service imp
             return getPort(serviceEndpointInterface);
         }
         java.lang.String inputPortName = portName.getLocalPart();
-        if ("SetProblemPort".equals(inputPortName)) {
-            return getSetProblemPort();
+        if ("WS_GUIPort".equals(inputPortName)) {
+            return getWS_GUIPort();
         }
         else  {
             java.rmi.Remote _stub = getPort(serviceEndpointInterface);
@@ -105,7 +105,7 @@ public class SetProblemServiceLocator extends org.apache.axis.client.Service imp
     }
 
     public javax.xml.namespace.QName getServiceName() {
-        return new javax.xml.namespace.QName("urn:SetProblem", "SetProblemService");
+        return new javax.xml.namespace.QName("urn:WS_GUI", "WS_GUIService");
     }
 
     private java.util.HashSet ports = null;
@@ -113,7 +113,7 @@ public class SetProblemServiceLocator extends org.apache.axis.client.Service imp
     public java.util.Iterator getPorts() {
         if (ports == null) {
             ports = new java.util.HashSet();
-            ports.add(new javax.xml.namespace.QName("urn:SetProblem", "SetProblemPort"));
+            ports.add(new javax.xml.namespace.QName("urn:WS_GUI", "WS_GUIPort"));
         }
         return ports.iterator();
     }
@@ -123,8 +123,8 @@ public class SetProblemServiceLocator extends org.apache.axis.client.Service imp
     */
     public void setEndpointAddress(java.lang.String portName, java.lang.String address) throws javax.xml.rpc.ServiceException {
         
-if ("SetProblemPort".equals(portName)) {
-            setSetProblemPortEndpointAddress(address);
+if ("WS_GUIPort".equals(portName)) {
+            setWS_GUIPortEndpointAddress(address);
         }
         else 
 { // Unknown Port Name

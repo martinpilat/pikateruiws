@@ -1,13 +1,13 @@
 /**
- * SetProblemBindingStub.java
+ * WS_GUIBindingStub.java
  *
  * This file was auto-generated from WSDL
  * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
  */
 
-package SetProblem;
+package WS_GUI;
 
-public class SetProblemBindingStub extends org.apache.axis.client.Stub implements SetProblem.SetProblemPort {
+public class WS_GUIBindingStub extends org.apache.axis.client.Stub implements WS_GUI.WS_GUIPort {
     private java.util.Vector cachedSerClasses = new java.util.Vector();
     private java.util.Vector cachedSerQNames = new java.util.Vector();
     private java.util.Vector cachedSerFactories = new java.util.Vector();
@@ -25,10 +25,10 @@ public class SetProblemBindingStub extends org.apache.axis.client.Stub implement
         org.apache.axis.description.ParameterDesc param;
         oper = new org.apache.axis.description.OperationDesc();
         oper.setName("set-problem");
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "agents"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("urn:SetProblem", "ArrayOfString"), java.lang.String[].class, false, false);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "agentDescriptions"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("urn:WS_GUI", "ArrayOfString"), java.lang.String[].class, false, false);
         param.setItemQName(new javax.xml.namespace.QName("", "string"));
         oper.addParameter(param);
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "file_names"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("urn:SetProblem", "ArrayOfString"), java.lang.String[].class, false, false);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "fileNames"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("urn:WS_GUI", "ArrayOfString"), java.lang.String[].class, false, false);
         param.setItemQName(new javax.xml.namespace.QName("", "string"));
         oper.addParameter(param);
         oper.setReturnType(org.apache.axis.encoding.XMLType.AXIS_VOID);
@@ -38,16 +38,16 @@ public class SetProblemBindingStub extends org.apache.axis.client.Stub implement
 
     }
 
-    public SetProblemBindingStub() throws org.apache.axis.AxisFault {
+    public WS_GUIBindingStub() throws org.apache.axis.AxisFault {
          this(null);
     }
 
-    public SetProblemBindingStub(java.net.URL endpointURL, javax.xml.rpc.Service service) throws org.apache.axis.AxisFault {
+    public WS_GUIBindingStub(java.net.URL endpointURL, javax.xml.rpc.Service service) throws org.apache.axis.AxisFault {
          this(service);
          super.cachedEndpoint = endpointURL;
     }
 
-    public SetProblemBindingStub(javax.xml.rpc.Service service) throws org.apache.axis.AxisFault {
+    public WS_GUIBindingStub(javax.xml.rpc.Service service) throws org.apache.axis.AxisFault {
         if (service == null) {
             super.service = new org.apache.axis.client.Service();
         } else {
@@ -67,7 +67,7 @@ public class SetProblemBindingStub extends org.apache.axis.client.Stub implement
             java.lang.Class simpledf = org.apache.axis.encoding.ser.SimpleDeserializerFactory.class;
             java.lang.Class simplelistsf = org.apache.axis.encoding.ser.SimpleListSerializerFactory.class;
             java.lang.Class simplelistdf = org.apache.axis.encoding.ser.SimpleListDeserializerFactory.class;
-            qName = new javax.xml.namespace.QName("urn:SetProblem", "ArrayOfString");
+            qName = new javax.xml.namespace.QName("urn:WS_GUI", "ArrayOfString");
             cachedSerQNames.add(qName);
             cls = java.lang.String[].class;
             cachedSerClasses.add(cls);
@@ -142,23 +142,23 @@ public class SetProblemBindingStub extends org.apache.axis.client.Stub implement
         }
     }
 
-    public void setProblem(java.lang.String[] agents, java.lang.String[] file_names) throws java.rmi.RemoteException {
+    public void setProblem(java.lang.String[] agentDescriptions, java.lang.String[] fileNames) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
         org.apache.axis.client.Call _call = createCall();
         _call.setOperation(_operations[0]);
         _call.setUseSOAPAction(true);
-        _call.setSOAPActionURI("urn:SetProblemAction");
+        _call.setSOAPActionURI("urn:WS_GUIAction");
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
         _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-        _call.setOperationName(new javax.xml.namespace.QName("urn:SetProblem", "set-problem"));
+        _call.setOperationName(new javax.xml.namespace.QName("urn:WS_GUI", "set-problem"));
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {agents, file_names});
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {agentDescriptions, fileNames});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;

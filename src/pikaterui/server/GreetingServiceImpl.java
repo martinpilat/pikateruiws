@@ -2,10 +2,10 @@ package pikaterui.server;
 
 import java.rmi.RemoteException;
 
+
 import pikaterui.client.GreetingService;
 import pikaterui.shared.FieldVerifier;
-
-import SetProblem.SetProblemPortProxy;
+import WS_GUI.*;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -18,7 +18,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 
 	public String greetServer(String[] agents, String[] files) throws IllegalArgumentException {
 				
-		SetProblemPortProxy sp = new SetProblemPortProxy();
+		WS_GUIPortProxy sp = new WS_GUIPortProxy();
 		
 		try {
 			sp.setProblem(agents, files);
@@ -28,7 +28,20 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 		
 		String serverInfo = getServletContext().getServerInfo();
 		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+		String ret = "";
+		
+		for (String s: agents) {
+			ret += s + "|";
+		}
+		
+		ret += "<br>";
+		
+		for (String s: files) {
+			ret += s + "|";
+		}
+		
+		
 		return "Hello, !<br><br>I am running " + serverInfo
-				+ ".<br><br>It looks like you are using:<br>" + userAgent;
+				+ ".<br><br>It looks like you are using:<br>" + userAgent + "<br>" + ret;
 	}
 }

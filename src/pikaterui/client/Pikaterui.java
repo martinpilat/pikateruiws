@@ -11,6 +11,7 @@ import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -40,22 +41,38 @@ public class Pikaterui implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 		final Button sendButton = new Button("Send");
-		final TextBox nameField = new TextBox();
-		nameField.setText("GWT User");
+		final Button agentsAddRow = new Button("Add agent");
+		final Button filesAddRow = new Button("Add file");
+		//final TextBox nameField = new TextBox();
+		//nameField.setText("GWT User");
+		
+		final FlexTable agentsTable = new FlexTable();
+		final FlexTable filesTable = new FlexTable();
+		
 		final Label errorLabel = new Label();
 
+		agentsTable.setText(0, 0, "Agent name");
+		agentsTable.setText(0, 1, "Paramters");
+		agentsTable.setWidget(1, 0, new TextBox());
+		agentsTable.setWidget(1, 1, new TextBox());
+		agentsTable.setWidget(2, 0, agentsAddRow);
+		
+		filesTable.setText(0, 0, "Filename");
+		filesTable.setWidget(1, 0, new TextBox());
+		filesTable.setWidget(2, 0, filesAddRow);
+		
 		// We can add style names to widgets
 		sendButton.addStyleName("sendButton");
 
 		// Add the nameField and sendButton to the RootPanel
 		// Use RootPanel.get() to get the entire body element
-		RootPanel.get("nameFieldContainer").add(nameField);
+		RootPanel.get("agentsTableContainer").add(agentsTable);
+		RootPanel.get("filesTableContainer").add(filesTable);
 		RootPanel.get("sendButtonContainer").add(sendButton);
-		RootPanel.get("errorLabelContainer").add(errorLabel);
 
 		// Focus the cursor on the name field when the app loads
-		nameField.setFocus(true);
-		nameField.selectAll();
+		//nameField.setFocus(true);
+		//nameField.selectAll();
 
 		// Create the popup dialog box
 		final DialogBox dialogBox = new DialogBox();
@@ -109,25 +126,26 @@ public class Pikaterui implements EntryPoint {
 			private void sendNameToServer() {
 				// First, we validate the input.
 				errorLabel.setText("");
-				String textToServer = nameField.getText();
-				if (!FieldVerifier.isValidName(textToServer)) {
-					errorLabel.setText("Please enter at least four characters");
-					return;
-				}
+				//if (!FieldVerifier.isValidName(textToServer)) {
+				//	errorLabel.setText("Please enter at least four characters");
+				//	return;
+				//}
 
 				// Then, we send the input to the server.
 				
-				String[] agents = new String[2];
-				String[] files = new String[2];
+				String[] agents = new String[agentsTable.getRowCount() - 2];
+				String[] files = new String[filesTable.getRowCount() - 2];
 				
-				agents[0] = "rbf1 -B ?"; 
-				agents[1] = "mp1 -L 0.2 -M ?";
-				
-				files[0] = "iris.arff";
-				files[1] = "weather.arff";
+				for (int i = 1; i < filesTable.getRowCount() - 1; i++) {
+					files[i-1] = ((TextBox)filesTable.getWidget(i, 0)).getText();
+				}
+
+				for (int i = 1; i < agentsTable.getRowCount() - 1; i++) {
+					agents[i-1] = ((TextBox)agentsTable.getWidget(i, 0)).getText(); 
+					agents[i-1] += " " + ((TextBox)agentsTable.getWidget(i, 1)).getText();
+				}
 				
 				sendButton.setEnabled(false);
-				textToServerLabel.setText(textToServer);
 				serverResponseLabel.setText("");
 				greetingService.greetServer(agents, files,
 						new AsyncCallback<String>() {
@@ -157,6 +175,24 @@ public class Pikaterui implements EntryPoint {
 		// Add a handler to send the name to the server
 		MyHandler handler = new MyHandler();
 		sendButton.addClickHandler(handler);
-		nameField.addKeyUpHandler(handler);
+		agentsAddRow.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				agentsTable.insertRow(agentsTable.getRowCount() - 1);
+				agentsTable.setWidget(agentsTable.getRowCount() - 2, 0, new TextBox());
+				agentsTable.setWidget(agentsTable.getRowCount() - 2, 1, new TextBox());
+			}
+		});
+		filesAddRow.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				filesTable.insertRow(filesTable.getRowCount() - 1);
+				filesTable.setWidget(filesTable.getRowCount() - 2, 0, new TextBox());
+			}
+		});
+		
+		//nameField.addKeyUpHandler(handler);
 	}
 }
