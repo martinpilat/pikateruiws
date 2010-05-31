@@ -1,20 +1,28 @@
 package pikaterui.client;
 
-import pikaterui.shared.FieldVerifier;
+import java.util.ArrayList;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.StackLayoutPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -43,37 +51,74 @@ public class Pikaterui implements EntryPoint {
 		final Button sendButton = new Button("Send");
 		final Button agentsAddRow = new Button("Add agent");
 		final Button filesAddRow = new Button("Add file");
-		//final TextBox nameField = new TextBox();
-		//nameField.setText("GWT User");
-		
-		final FlexTable agentsTable = new FlexTable();
-		final FlexTable filesTable = new FlexTable();
+		final ArrayList<String> agents = new ArrayList<String>();
 		
 		final Label errorLabel = new Label();
-
-		agentsTable.setText(0, 0, "Agent name");
-		agentsTable.setText(0, 1, "Paramters");
-		agentsTable.setWidget(1, 0, new TextBox());
-		agentsTable.setWidget(1, 1, new TextBox());
-		agentsTable.setWidget(2, 0, agentsAddRow);
+		
+		final DockLayoutPanel agentsTable = new DockLayoutPanel(Unit.PX);
+		final FlexTable filesTable = new FlexTable(); 
 		
 		filesTable.setText(0, 0, "Filename");
 		filesTable.setWidget(1, 0, new TextBox());
 		filesTable.setWidget(2, 0, filesAddRow);
+
+		greetingService.getAgents(new AsyncCallback<String[]>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				errorLabel.setText(caught.getMessage());
+				agentsAddRow.setText("error");
+				agentsTable.add(agentsAddRow);
+			}
+
+			@Override
+			public void onSuccess(String[] result) {
+				for (String s : result) {
+					agents.add(s);
+				}
+				agentsTable.addNorth(new AgentConfigLine(agents),20);
+				agentsTable.addNorth(agentsAddRow,20);
+			}
+		});
+
+		//final TextBox nameField = new TextBox();
+		//nameField.setText("GWT User");
 		
+				
 		// We can add style names to widgets
 		sendButton.addStyleName("sendButton");
 
 		// Add the nameField and sendButton to the RootPanel
 		// Use RootPanel.get() to get the entire body element
-		RootPanel.get("agentsTableContainer").add(agentsTable);
-		RootPanel.get("filesTableContainer").add(filesTable);
-		RootPanel.get("sendButtonContainer").add(sendButton);
+		
+		//RootPanel.get("agentsTableContainer").add(agentsTable);
+		//RootPanel.get("filesTableContainer").add(filesTable);
+		//RootPanel.get("sendButtonContainer").add(sendButton);
 
+		sendButton.setWidth("100px");
+		sendButton.setHeight("50px");
+		
+		StackLayoutPanel sp = new StackLayoutPanel(Unit.PX);
+		sp.add(agentsTable, "Agents", 30.0);
+		sp.add(filesTable, "Files", 30.0);
+		
+		ArrayList<String> aaa = new ArrayList<String>();
+		aaa.add("agent1");
+		aaa.add("agent2");
+		
+		DockLayoutPanel dp = new DockLayoutPanel(Unit.PX);
+		dp.addNorth(new HTML("<h1>Web Services Pikater UI</h1>"), 100);		
+		dp.addEast(new Label(), 100);
+		dp.addWest(new Label(), 100);
+		dp.addSouth(sendButton, 50);
+		dp.add(sp);
+		
+		RootLayoutPanel rp = RootLayoutPanel.get();
+		rp.add(dp);
 		// Focus the cursor on the name field when the app loads
 		//nameField.setFocus(true);
 		//nameField.selectAll();
-
+				
 		// Create the popup dialog box
 		final DialogBox dialogBox = new DialogBox();
 		dialogBox.setText("Remote Procedure Call");
@@ -133,18 +178,17 @@ public class Pikaterui implements EntryPoint {
 
 				// Then, we send the input to the server.
 				
-				String[] agents = new String[agentsTable.getRowCount() - 2];
+				String[] agents = new String[agentsTable.getWidgetCount() - 2];
 				String[] files = new String[filesTable.getRowCount() - 2];
 				
 				for (int i = 1; i < filesTable.getRowCount() - 1; i++) {
 					files[i-1] = ((TextBox)filesTable.getWidget(i, 0)).getText();
 				}
 
-				for (int i = 1; i < agentsTable.getRowCount() - 1; i++) {
-					agents[i-1] = ((TextBox)agentsTable.getWidget(i, 0)).getText(); 
-					agents[i-1] += " " + ((TextBox)agentsTable.getWidget(i, 1)).getText();
+				for (int i = 0; i < agentsTable.getWidgetCount() - 1; i++) {
+					agents[i-1] = ((AgentConfigLine)agentsTable.getWidget(i)).getConfigLine();
 				}
-				
+												
 				sendButton.setEnabled(false);
 				serverResponseLabel.setText("");
 				greetingService.greetServer(agents, files,
@@ -179,11 +223,16 @@ public class Pikaterui implements EntryPoint {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				agentsTable.insertRow(agentsTable.getRowCount() - 1);
-				agentsTable.setWidget(agentsTable.getRowCount() - 2, 0, new TextBox());
-				agentsTable.setWidget(agentsTable.getRowCount() - 2, 1, new TextBox());
+				ListBox lb = new ListBox();
+				
+				for (String s : agents) {
+					lb.addItem(s);
+				}
+
+				agentsTable.insertNorth(new AgentConfigLine(agents), 20, agentsAddRow);
 			}
 		});
+		
 		filesAddRow.addClickHandler(new ClickHandler() {
 			
 			@Override

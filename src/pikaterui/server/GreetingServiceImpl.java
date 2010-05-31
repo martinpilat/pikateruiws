@@ -44,4 +44,18 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 		return "Hello, !<br><br>I am running " + serverInfo
 				+ ".<br><br>It looks like you are using:<br>" + userAgent + "<br>" + ret;
 	}
+
+	@Override
+	public String[] getAgents() {
+		
+		WS_GUIPortProxy sp = new WS_GUIPortProxy();
+		
+		try {
+			return sp.getAgents();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 }

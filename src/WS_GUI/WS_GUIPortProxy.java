@@ -50,5 +50,11 @@ public class WS_GUIPortProxy implements WS_GUI.WS_GUIPort {
     wS_GUIPort.setProblem(agentDescriptions, fileNames);
   }
   
+  public java.lang.String[] getAgents() throws java.rmi.RemoteException{
+    if (wS_GUIPort == null)
+      _initWS_GUIPortProxy();
+    return wS_GUIPort.getAgents();
+  }
+  
   
 }
