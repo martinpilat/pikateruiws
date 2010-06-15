@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsdl:definitions name="WS_GUI" targetNamespace="urn:WS_GUI" xmlns:impl="urn:WS_GUI" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <wsdl:types>
-    <xsd:schema targetNamespace="urn:WS_GUI" xmlns:impl="urn:WS_GUI" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><xsd:annotation/><xsd:element name="set-problem"><xsd:complexType><xsd:sequence><xsd:element name="agentDescriptions" type="impl:ArrayOfString"/><xsd:element name="fileNames" type="impl:ArrayOfString"/></xsd:sequence></xsd:complexType></xsd:element><xsd:complexType name="ArrayOfString"><xsd:sequence><xsd:element maxOccurs="unbounded" minOccurs="1" name="string" type="xsd:string"/></xsd:sequence></xsd:complexType><xsd:element name="set-problemResponse"><xsd:complexType><xsd:sequence/></xsd:complexType></xsd:element><xsd:element name="get-agents"><xsd:complexType><xsd:sequence/></xsd:complexType></xsd:element><xsd:element name="get-agentsResponse"><xsd:complexType><xsd:sequence><xsd:element name="get-agentsReturn" type="impl:ArrayOfString"/></xsd:sequence></xsd:complexType></xsd:element></xsd:schema>
+    <xsd:schema targetNamespace="urn:WS_GUI" xmlns:impl="urn:WS_GUI" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><xsd:annotation/><xsd:element name="set-problem"><xsd:complexType><xsd:sequence><xsd:element name="agentDescriptions" type="impl:ArrayOfString"/><xsd:element name="fileNames" type="impl:ArrayOfString"/></xsd:sequence></xsd:complexType></xsd:element><xsd:complexType name="ArrayOfString"><xsd:sequence><xsd:element maxOccurs="unbounded" minOccurs="1" name="string" type="xsd:string"/></xsd:sequence></xsd:complexType><xsd:element name="set-problemResponse"><xsd:complexType><xsd:sequence/></xsd:complexType></xsd:element><xsd:element name="get-options"><xsd:complexType><xsd:sequence><xsd:element name="agentName" type="xsd:string"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="get-optionsResponse"><xsd:complexType><xsd:sequence><xsd:element name="get-optionsReturn" type="impl:ArrayOfOption"/></xsd:sequence></xsd:complexType></xsd:element><xsd:complexType name="ArrayOfOption"><xsd:sequence><xsd:element maxOccurs="unbounded" minOccurs="0" name="option" type="impl:option"/></xsd:sequence></xsd:complexType><xsd:complexType name="option"><xsd:sequence><xsd:element name="name" type="xsd:string"/><xsd:element name="description" type="xsd:string"/><xsd:element name="synopsis" type="xsd:string"/><xsd:element minOccurs="0" name="value" type="xsd:string"/></xsd:sequence></xsd:complexType><xsd:element name="get-agents"><xsd:complexType><xsd:sequence/></xsd:complexType></xsd:element><xsd:element name="get-agentsResponse"><xsd:complexType><xsd:sequence><xsd:element name="get-agentsReturn" type="impl:ArrayOfString"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="get-results"><xsd:complexType><xsd:sequence/></xsd:complexType></xsd:element><xsd:element name="get-resultsResponse"><xsd:complexType><xsd:sequence/></xsd:complexType></xsd:element></xsd:schema>
   </wsdl:types>
   <wsdl:message name="set-problemResponse">
     <wsdl:part name="parameters" element="impl:set-problemResponse">
@@ -15,8 +15,24 @@
     <wsdl:part name="parameters" element="impl:get-agentsResponse">
     </wsdl:part>
   </wsdl:message>
+  <wsdl:message name="get-optionsRequest">
+    <wsdl:part name="parameters" element="impl:get-options">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="get-resultsRequest">
+    <wsdl:part name="parameters" element="impl:get-results">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="get-optionsResponse">
+    <wsdl:part name="parameters" element="impl:get-optionsResponse">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:message name="set-problemRequest">
     <wsdl:part name="parameters" element="impl:set-problem">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="get-resultsResponse">
+    <wsdl:part name="parameters" element="impl:get-resultsResponse">
     </wsdl:part>
   </wsdl:message>
   <wsdl:portType name="WS_GUIPort">
@@ -26,10 +42,22 @@
       <wsdl:output message="impl:set-problemResponse">
     </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="get-options">
+      <wsdl:input message="impl:get-optionsRequest">
+    </wsdl:input>
+      <wsdl:output message="impl:get-optionsResponse">
+    </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="get-agents">
       <wsdl:input message="impl:get-agentsRequest">
     </wsdl:input>
       <wsdl:output message="impl:get-agentsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="get-results">
+      <wsdl:input message="impl:get-resultsRequest">
+    </wsdl:input>
+      <wsdl:output message="impl:get-resultsResponse">
     </wsdl:output>
     </wsdl:operation>
   </wsdl:portType>
@@ -44,7 +72,25 @@
         <wsdlsoap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="get-options">
+      <wsdlsoap:operation soapAction="urn:WS_GUIAction"/>
+      <wsdl:input>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="get-agents">
+      <wsdlsoap:operation soapAction="urn:WS_GUIAction"/>
+      <wsdl:input>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="get-results">
       <wsdlsoap:operation soapAction="urn:WS_GUIAction"/>
       <wsdl:input>
         <wsdlsoap:body use="literal"/>

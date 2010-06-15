@@ -2,15 +2,20 @@ package pikaterui.client;
 
 import java.util.ArrayList;
 
+import pikaterui.shared.Option;
+
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.TextBox;
 
 public class AgentConfigLine extends Composite {
@@ -23,6 +28,9 @@ public class AgentConfigLine extends Composite {
 	Button edit = new Button("save");
 	Button delete = new Button("delete");
 	
+	private final GreetingServiceAsync greetingService = GWT
+	.create(GreetingService.class);
+	
 	final static int AGENT_NAME_INDEX = 0;
 	final static int AGENT_PARAMS_INDEX = 1;
 	
@@ -32,6 +40,42 @@ public class AgentConfigLine extends Composite {
 		for (String s: agentsList) {
 			agentSelect.addItem(s);
 		}
+	}
+	
+	class AgentParamsHandler implements ClickHandler {
+
+		AgentConfigLine myLine;
+		
+		public AgentParamsHandler(AgentConfigLine acl) {
+			myLine = acl;
+		}
+		
+		public void onClick(ClickEvent event) {
+			
+			String aName = myLine.agentSelect.getItemText(myLine.agentSelect.getSelectedIndex());
+			
+			greetingService.getAgentOptions(aName, new AsyncCallback<Option[]>() {
+				
+				@Override
+				public void onSuccess(Option[] result) {
+					String title = "";
+					for(Option o : result) {
+						title += o.getSynopsis() + "--" +o.getDescription() + "\n";
+					}
+					myLine.agentParamsEdit.setTitle(title);
+				}
+				
+				@Override
+				public void onFailure(Throwable caught) {
+				}
+			});
+			
+			
+
+			
+		}
+		
+		
 	}
 	
 	public AgentConfigLine() {
@@ -67,6 +111,7 @@ public class AgentConfigLine extends Composite {
 					hp.insert(agentParams, AGENT_PARAMS_INDEX);
 					source.setText("edit");
 				}
+				RootLayoutPanel.get().forceLayout();
 			}
 		});	
 		
@@ -74,9 +119,11 @@ public class AgentConfigLine extends Composite {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				hp.removeFromParent();	
+				AgentConfigLine.this.removeFromParent();
 			}
 		});
+		
+		agentParamsEdit.addClickHandler(new AgentParamsHandler(this));
 		
 		initWidget(hp);
 	}

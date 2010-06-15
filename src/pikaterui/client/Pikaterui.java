@@ -43,7 +43,7 @@ public class Pikaterui implements EntryPoint {
 	 */
 	private final GreetingServiceAsync greetingService = GWT
 			.create(GreetingService.class);
-
+	
 	/**
 	 * This is the entry point method.
 	 */
@@ -66,8 +66,7 @@ public class Pikaterui implements EntryPoint {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				errorLabel.setText(caught.getMessage());
-				agentsAddRow.setText("error");
+				errorLabel.setText(caught.toString());
 				agentsTable.add(agentsAddRow);
 			}
 
@@ -107,7 +106,8 @@ public class Pikaterui implements EntryPoint {
 		aaa.add("agent2");
 		
 		DockLayoutPanel dp = new DockLayoutPanel(Unit.PX);
-		dp.addNorth(new HTML("<h1>Web Services Pikater UI</h1>"), 100);		
+		dp.addNorth(new HTML("<h1>Web Services Pikater UI</h1>"), 100);
+		dp.addNorth(errorLabel, 30);
 		dp.addEast(new Label(), 100);
 		dp.addWest(new Label(), 100);
 		dp.addSouth(sendButton, 50);
@@ -186,7 +186,7 @@ public class Pikaterui implements EntryPoint {
 				}
 
 				for (int i = 0; i < agentsTable.getWidgetCount() - 1; i++) {
-					agents[i-1] = ((AgentConfigLine)agentsTable.getWidget(i)).getConfigLine();
+					agents[i] = ((AgentConfigLine)agentsTable.getWidget(i)).getConfigLine();
 				}
 												
 				sendButton.setEnabled(false);

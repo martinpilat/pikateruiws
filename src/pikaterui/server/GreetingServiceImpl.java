@@ -4,8 +4,8 @@ import java.rmi.RemoteException;
 
 
 import pikaterui.client.GreetingService;
-import pikaterui.shared.FieldVerifier;
-import WS_GUI.*;
+import pikaterui.shared.Option;
+import WS_GUI.WS_GUIPortProxy;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -46,16 +46,48 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public String[] getAgents() {
+	public String[] getAgents() throws IllegalArgumentException{
 		
 		WS_GUIPortProxy sp = new WS_GUIPortProxy();
 		
 		try {
+			
 			return sp.getAgents();
-		} catch (RemoteException e) {
-			e.printStackTrace();
+		}
+		catch (RemoteException e) {
+			String err = new String();
+			
+			for (StackTraceElement s : e.getStackTrace()) {
+				err += s.toString() + " <br>";
+			}
+			
+			
+			throw new IllegalArgumentException(err);
+			
+			
+			
 		}
 		
+	}
+
+	@Override
+	public Option[] getAgentOptions(String agent)
+			throws IllegalArgumentException {
+		WS_GUIPortProxy sp = new WS_GUIPortProxy();
+		
+		try {
+			WS_GUI.Option[] options = sp.getOptions(agent);
+			Option[] o = new Option[options.length]; 
+			
+			for (int i = 0; i < o.length; i++) {
+				o[i] = new Option(options[i].getName(), options[i].getDescription(), options[i].getSynopsis(), options[i].getValue());
+			}
+			return o; 
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
+		
 	}
 }

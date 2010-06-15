@@ -9,5 +9,7 @@ package WS_GUI;
 
 public interface WS_GUIPort extends java.rmi.Remote {
     public void setProblem(java.lang.String[] agentDescriptions, java.lang.String[] fileNames) throws java.rmi.RemoteException;
+    public WS_GUI.Option[] getOptions(java.lang.String agentName) throws java.rmi.RemoteException;
     public java.lang.String[] getAgents() throws java.rmi.RemoteException;
+    public void getResults() throws java.rmi.RemoteException;
 }
