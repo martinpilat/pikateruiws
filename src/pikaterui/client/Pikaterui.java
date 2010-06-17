@@ -55,7 +55,11 @@ public class Pikaterui implements EntryPoint {
 		
 		final Label errorLabel = new Label();
 		
-		final DockLayoutPanel agentsTable = new DockLayoutPanel(Unit.PX);
+		final VerticalPanel agentsTable = new VerticalPanel();
+		
+		agentsTable.setWidth("100%");
+		agentsTable.setBorderWidth(0);
+		
 		final FlexTable filesTable = new FlexTable(); 
 		
 		filesTable.setText(0, 0, "Filename");
@@ -75,8 +79,8 @@ public class Pikaterui implements EntryPoint {
 				for (String s : result) {
 					agents.add(s);
 				}
-				agentsTable.addNorth(new AgentConfigLine(agents),20);
-				agentsTable.addNorth(agentsAddRow,20);
+				agentsTable.add(new AgentConfigLine(agents));
+				agentsTable.add(agentsAddRow);
 			}
 		});
 
@@ -229,7 +233,7 @@ public class Pikaterui implements EntryPoint {
 					lb.addItem(s);
 				}
 
-				agentsTable.insertNorth(new AgentConfigLine(agents), 20, agentsAddRow);
+				agentsTable.insert(new AgentConfigLine(agents), agentsTable.getWidgetCount() - 1);
 			}
 		});
 		
