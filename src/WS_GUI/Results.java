@@ -1,0 +1,147 @@
+/**
+ * Results.java
+ *
+ * This file was auto-generated from WSDL
+ * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
+ */
+
+package WS_GUI;
+
+public class Results  implements java.io.Serializable {
+    private float errorRate;
+
+    private float pctCorrect;
+
+    public Results() {
+    }
+
+    public Results(
+           float errorRate,
+           float pctCorrect) {
+           this.errorRate = errorRate;
+           this.pctCorrect = pctCorrect;
+    }
+
+
+    /**
+     * Gets the errorRate value for this Results.
+     * 
+     * @return errorRate
+     */
+    public float getErrorRate() {
+        return errorRate;
+    }
+
+
+    /**
+     * Sets the errorRate value for this Results.
+     * 
+     * @param errorRate
+     */
+    public void setErrorRate(float errorRate) {
+        this.errorRate = errorRate;
+    }
+
+
+    /**
+     * Gets the pctCorrect value for this Results.
+     * 
+     * @return pctCorrect
+     */
+    public float getPctCorrect() {
+        return pctCorrect;
+    }
+
+
+    /**
+     * Sets the pctCorrect value for this Results.
+     * 
+     * @param pctCorrect
+     */
+    public void setPctCorrect(float pctCorrect) {
+        this.pctCorrect = pctCorrect;
+    }
+
+    private java.lang.Object __equalsCalc = null;
+    public synchronized boolean equals(java.lang.Object obj) {
+        if (!(obj instanceof Results)) return false;
+        Results other = (Results) obj;
+        if (obj == null) return false;
+        if (this == obj) return true;
+        if (__equalsCalc != null) {
+            return (__equalsCalc == obj);
+        }
+        __equalsCalc = obj;
+        boolean _equals;
+        _equals = true && 
+            this.errorRate == other.getErrorRate() &&
+            this.pctCorrect == other.getPctCorrect();
+        __equalsCalc = null;
+        return _equals;
+    }
+
+    private boolean __hashCodeCalc = false;
+    public synchronized int hashCode() {
+        if (__hashCodeCalc) {
+            return 0;
+        }
+        __hashCodeCalc = true;
+        int _hashCode = 1;
+        _hashCode += new Float(getErrorRate()).hashCode();
+        _hashCode += new Float(getPctCorrect()).hashCode();
+        __hashCodeCalc = false;
+        return _hashCode;
+    }
+
+    // Type metadata
+    private static org.apache.axis.description.TypeDesc typeDesc =
+        new org.apache.axis.description.TypeDesc(Results.class, true);
+
+    static {
+        typeDesc.setXmlType(new javax.xml.namespace.QName("urn:WS_GUI", "results"));
+        org.apache.axis.description.ElementDesc elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("errorRate");
+        elemField.setXmlName(new javax.xml.namespace.QName("", "errorRate"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "float"));
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("pctCorrect");
+        elemField.setXmlName(new javax.xml.namespace.QName("", "pctCorrect"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "float"));
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+    }
+
+    /**
+     * Return type metadata object
+     */
+    public static org.apache.axis.description.TypeDesc getTypeDesc() {
+        return typeDesc;
+    }
+
+    /**
+     * Get Custom Serializer
+     */
+    public static org.apache.axis.encoding.Serializer getSerializer(
+           java.lang.String mechType, 
+           java.lang.Class _javaType,  
+           javax.xml.namespace.QName _xmlType) {
+        return 
+          new  org.apache.axis.encoding.ser.BeanSerializer(
+            _javaType, _xmlType, typeDesc);
+    }
+
+    /**
+     * Get Custom Deserializer
+     */
+    public static org.apache.axis.encoding.Deserializer getDeserializer(
+           java.lang.String mechType, 
+           java.lang.Class _javaType,  
+           javax.xml.namespace.QName _xmlType) {
+        return 
+          new  org.apache.axis.encoding.ser.BeanDeserializer(
+            _javaType, _xmlType, typeDesc);
+    }
+
+}

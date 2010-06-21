@@ -31,7 +31,9 @@ public class WS_GUIBindingStub extends org.apache.axis.client.Stub implements WS
         param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "fileNames"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("urn:WS_GUI", "ArrayOfString"), java.lang.String[].class, false, false);
         param.setItemQName(new javax.xml.namespace.QName("", "string"));
         oper.addParameter(param);
-        oper.setReturnType(org.apache.axis.encoding.XMLType.AXIS_VOID);
+        oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        oper.setReturnClass(java.lang.String.class);
+        oper.setReturnQName(new javax.xml.namespace.QName("", "set-problemReturn"));
         oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
         _operations[0] = oper;
@@ -62,7 +64,11 @@ public class WS_GUIBindingStub extends org.apache.axis.client.Stub implements WS
 
         oper = new org.apache.axis.description.OperationDesc();
         oper.setName("get-results");
-        oper.setReturnType(org.apache.axis.encoding.XMLType.AXIS_VOID);
+        oper.setReturnType(new javax.xml.namespace.QName("urn:WS_GUI", "ArrayOfResults"));
+        oper.setReturnClass(WS_GUI.Results[].class);
+        oper.setReturnQName(new javax.xml.namespace.QName("", "get-resultsReturn"));
+        param = oper.getReturnParamDesc();
+        param.setItemQName(new javax.xml.namespace.QName("", "results"));
         oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
         _operations[3] = oper;
@@ -107,6 +113,15 @@ public class WS_GUIBindingStub extends org.apache.axis.client.Stub implements WS
             cachedSerFactories.add(new org.apache.axis.encoding.ser.ArraySerializerFactory(qName, qName2));
             cachedDeserFactories.add(new org.apache.axis.encoding.ser.ArrayDeserializerFactory());
 
+            qName = new javax.xml.namespace.QName("urn:WS_GUI", "ArrayOfResults");
+            cachedSerQNames.add(qName);
+            cls = WS_GUI.Results[].class;
+            cachedSerClasses.add(cls);
+            qName = new javax.xml.namespace.QName("urn:WS_GUI", "results");
+            qName2 = new javax.xml.namespace.QName("", "results");
+            cachedSerFactories.add(new org.apache.axis.encoding.ser.ArraySerializerFactory(qName, qName2));
+            cachedDeserFactories.add(new org.apache.axis.encoding.ser.ArrayDeserializerFactory());
+
             qName = new javax.xml.namespace.QName("urn:WS_GUI", "ArrayOfString");
             cachedSerQNames.add(qName);
             cls = java.lang.String[].class;
@@ -119,6 +134,13 @@ public class WS_GUIBindingStub extends org.apache.axis.client.Stub implements WS
             qName = new javax.xml.namespace.QName("urn:WS_GUI", "option");
             cachedSerQNames.add(qName);
             cls = WS_GUI.Option.class;
+            cachedSerClasses.add(cls);
+            cachedSerFactories.add(beansf);
+            cachedDeserFactories.add(beandf);
+
+            qName = new javax.xml.namespace.QName("urn:WS_GUI", "results");
+            cachedSerQNames.add(qName);
+            cls = WS_GUI.Results.class;
             cachedSerClasses.add(cls);
             cachedSerFactories.add(beansf);
             cachedDeserFactories.add(beandf);
@@ -189,7 +211,7 @@ public class WS_GUIBindingStub extends org.apache.axis.client.Stub implements WS
         }
     }
 
-    public void setProblem(java.lang.String[] agentDescriptions, java.lang.String[] fileNames) throws java.rmi.RemoteException {
+    public java.lang.String setProblem(java.lang.String[] agentDescriptions, java.lang.String[] fileNames) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -210,7 +232,14 @@ public class WS_GUIBindingStub extends org.apache.axis.client.Stub implements WS
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
         }
-        extractAttachments(_call);
+        else {
+            extractAttachments(_call);
+            try {
+                return (java.lang.String) _resp;
+            } catch (java.lang.Exception _exception) {
+                return (java.lang.String) org.apache.axis.utils.JavaUtils.convert(_resp, java.lang.String.class);
+            }
+        }
   } catch (org.apache.axis.AxisFault axisFaultException) {
   throw axisFaultException;
 }
@@ -284,7 +313,7 @@ public class WS_GUIBindingStub extends org.apache.axis.client.Stub implements WS
 }
     }
 
-    public void getResults() throws java.rmi.RemoteException {
+    public WS_GUI.Results[] getResults() throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -305,7 +334,14 @@ public class WS_GUIBindingStub extends org.apache.axis.client.Stub implements WS
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
         }
-        extractAttachments(_call);
+        else {
+            extractAttachments(_call);
+            try {
+                return (WS_GUI.Results[]) _resp;
+            } catch (java.lang.Exception _exception) {
+                return (WS_GUI.Results[]) org.apache.axis.utils.JavaUtils.convert(_resp, WS_GUI.Results[].class);
+            }
+        }
   } catch (org.apache.axis.AxisFault axisFaultException) {
   throw axisFaultException;
 }

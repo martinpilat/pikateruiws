@@ -44,10 +44,10 @@ public class WS_GUIPortProxy implements WS_GUI.WS_GUIPort {
     return wS_GUIPort;
   }
   
-  public void setProblem(java.lang.String[] agentDescriptions, java.lang.String[] fileNames) throws java.rmi.RemoteException{
+  public java.lang.String setProblem(java.lang.String[] agentDescriptions, java.lang.String[] fileNames) throws java.rmi.RemoteException{
     if (wS_GUIPort == null)
       _initWS_GUIPortProxy();
-    wS_GUIPort.setProblem(agentDescriptions, fileNames);
+    return wS_GUIPort.setProblem(agentDescriptions, fileNames);
   }
   
   public WS_GUI.Option[] getOptions(java.lang.String agentName) throws java.rmi.RemoteException{
@@ -62,10 +62,10 @@ public class WS_GUIPortProxy implements WS_GUI.WS_GUIPort {
     return wS_GUIPort.getAgents();
   }
   
-  public void getResults() throws java.rmi.RemoteException{
+  public WS_GUI.Results[] getResults() throws java.rmi.RemoteException{
     if (wS_GUIPort == null)
       _initWS_GUIPortProxy();
-    wS_GUIPort.getResults();
+    return wS_GUIPort.getResults();
   }
   
   
